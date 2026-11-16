@@ -1,0 +1,10 @@
+# Dados brutos do Kaggle: cada pessoa baixa o seu (ver README)
+data/amazon.csv
+
+# Arquivos temporários
+.ipynb_checkpoints/
+__pycache__/
+~$*
+*.tmp
+Thumbs.db
+.DS_Store
