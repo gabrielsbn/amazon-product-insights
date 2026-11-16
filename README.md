@@ -32,7 +32,7 @@ Análise de produtos de um catálogo da Amazon, desenvolvida como Tech Challenge
 
 ## Como Reproduzir
 1. Baixe o `amazon.csv` no Kaggle e salve em `data/amazon.csv`;
-2. Execute `notebooks/auditoria.ipynb` do início ao fim; ele gera o `produto_tema.csv`;
+2. Execute `notebooks/auditoria.ipynb` do início ao fim; ele gera o `produto_tema.csv` na própria pasta `notebooks/` (a versão já publicada está em `data/`; copie o arquivo novo para lá se quiser substituí-la);
 3. Abra o `.pbix` (link abaixo) no Power BI Desktop; o modelo usa `amazon.csv` tratado no Power Query e `produto_tema.csv`.
 
 ## Principais Indicadores

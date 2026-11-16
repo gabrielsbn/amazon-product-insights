@@ -39,10 +39,28 @@ SWITCH(TRUE(),
 Os cortes são percentis da base: 16.020 = P75 e 1.106 = P25 das avaliações; 3,9 = P25 e 4,3 = P75 da nota.
 
 ### Grupo de nota
-`GRUPO_NOTA` classifica cada produto em **Baixa** (nota ≤ 3,9), **Média** e **Alta** (nota ≥ 4,3), com "Sem nota" para o produto sem rating. `GRUPO_NOTA_ORDEM` ordena Baixa, Média, Alta.
+`GRUPO_NOTA` classifica cada produto em **Baixa** (nota ≤ 3,9), **Média** e **Alta** (nota ≥ 4,3), com "Sem nota" para o produto sem rating. `GRUPO_NOTA_ORDEM` ordena os grupos na ordem Baixa (1), Média (2), Alta (3) e Sem nota (4). Os cortes 3,9 e 4,3 são os percentis 25 e 75 da nota.
 
 ```dax
--- COLE AQUI a fórmula de GRUPO_NOTA e GRUPO_NOTA_ORDEM do modelo
+GRUPO_NOTA =
+SWITCH (
+    TRUE(),
+    ISBLANK(produtos[rating]), "Sem nota",
+    produtos[rating] <= 3.9, "Baixa (até 3,9)",
+    produtos[rating] >= 4.3, "Alta (4,3 ou mais)",
+    "Média"
+)
+```
+
+```dax
+GRUPO_NOTA_ORDEM =
+SWITCH(
+    TRUE(),
+    ISBLANK(produtos[rating]), 4,
+    produtos[rating] <= 3.9, 1,
+    produtos[rating] >= 4.3, 3,
+    2
+)
 ```
 
 ---
@@ -113,5 +131,10 @@ Valores de referência: 49 produtos de alerta e 81 de oportunidade.
 `% MENCIONA(AMOSTRA MINIMA)` calcula, para cada tema, a **% de produtos do grupo de nota que mencionam o tema** (tabela `produto_tema`) e devolve vazio quando o grupo tem **menos de 20 produtos**, para evitar percentuais enganosos.
 
 ```dax
--- COLE AQUI a fórmula de % MENCIONA(AMOSTRA MINIMA) do modelo
+% MENCIONA(AMOSTRA MINIMA) =
+IF([TOTAL_PRODUTOS] >= 20,
+    [% PRODUTOS_MENCIONAM]
+)
 ```
+
+A medida usa `TOTAL_PRODUTOS` (seção 2) para contar os produtos do grupo e `% PRODUTOS_MENCIONAM` como medida-base da % de menção; sem o mínimo de 20 produtos o `IF` não devolve valor e o visual fica em branco.
